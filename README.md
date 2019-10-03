@@ -38,7 +38,8 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 
 # Running the pipeline scripts
 
-1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following {*SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt*}
+1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following:
+{*SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt*}
 
    Input signal file example:
 
