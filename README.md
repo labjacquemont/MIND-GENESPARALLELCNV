@@ -37,7 +37,7 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 
 # Running the pipeline scripts
 
-1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following {SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt
+1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following {_SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt_}
 
    Input signal file example:
 
@@ -53,10 +53,8 @@ rs115991721|1|767096|0.013|0
 rs12562034|1|768448|0.275|1
 rs116390263|1|772927|0.352|0.997
 
-Name | Chr | Name | Chr
------------- | -------------
-Content from cell 1 | Content from cell 2
-Content in the first column | Content in the second column
+
+
 
 
 
