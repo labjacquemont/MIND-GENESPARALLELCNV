@@ -52,6 +52,11 @@ rs115991721|1|767096|0.013|0
 rs12562034|1|768448|0.275|1
 rs116390263|1|772927|0.352|0.997
 
+First Header | Second Header
+------------ | -------------
+Content from cell 1 | Content from cell 2
+Content in the first column | Content in the second column
+
 
 
 
