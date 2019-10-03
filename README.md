@@ -40,9 +40,9 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following {SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt
 
    Input signal file example:
-Name|Chr|Position|Samplename.Log R Ratio|SampleName.B Allele Freq
-----|---|--------|----------------------|------------------------
-rs116720794|1|729632|-0.083|1
+Name | Chr | Position | Samplename.Log R Ratio | SampleName.B Allele Freq
+---- | --- | -------- | ---------------------- | ------------------------
+rs116720794 | 1 | 729632 | -0.083 | 1
 rs3131972|1|752721|-0.202|0.533
 rs12184325|1|754105|-0.152|1
 rs3131962|1|756604|-0.286|0.535
