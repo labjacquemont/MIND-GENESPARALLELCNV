@@ -26,9 +26,23 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 3) Download and install PennCNV and QuantiSNP from the link below:
    http://penncnv.openbioinformatics.org/en/latest/
    https://github.com/WGLab/PennCNV
+   https://sites.google.com/site/quantisnp/home
 
    After compiling and install pennCNV according to the tool readme, it's important to compile the kext libraries located on the    PennCNV installation folder. These libraries are usefull for self HMM training.
 
    Most researchers are already aware that genotyping quality may varies between individuals from the same cohort but also between genotyping technologies. Therefore, training HMM data integrity may difer from one genotyping technology to another, and could have negative consequence on CNV calling results. To fix this problem, it's alway better to built specific HMM for fpecific cohort. 
 
 4) Finaly, fill out the configuration file (.config file) with all required path and file path.
+
+
+# Running the pipeline scripts
+
+1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following {SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt
+
+   Input signal file example:
+   
+
+
+
+
+
