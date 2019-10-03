@@ -41,6 +41,7 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 
    Input signal file example:
 Name|Chr|Position|Samplename.Log R Ratio|SampleName.B Allele Freq
+----|---|--------|----------------------|------------------------
 rs116720794|1|729632|-0.083|1
 rs3131972|1|752721|-0.202|0.533
 rs12184325|1|754105|-0.152|1
