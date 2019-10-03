@@ -24,6 +24,7 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 
 
 3) Download and install PennCNV and QuantiSNP from the link below:
+
    http://penncnv.openbioinformatics.org/en/latest/
    https://github.com/WGLab/PennCNV
    https://sites.google.com/site/quantisnp/home
@@ -37,7 +38,7 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 
 # Running the pipeline scripts
 
-1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following {_SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt_}
+1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following {*SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt*}
 
    Input signal file example:
 
