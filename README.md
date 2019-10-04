@@ -26,7 +26,9 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 3) Download and install PennCNV and QuantiSNP from the link below:
 
    http://penncnv.openbioinformatics.org/en/latest/
+   
    https://github.com/WGLab/PennCNV
+   
    https://sites.google.com/site/quantisnp/home
 
    After compiling and install pennCNV according to the tool readme, it's important to compile the kext libraries located on the    PennCNV installation folder. These libraries are usefull for self HMM training.
