@@ -12,7 +12,7 @@ and CNV calling algorith suggestion are welcome.
 As part of the JacquemontLab, I provide sharing permission and rigth for 
 collaborators and lab group members to share algorithm and code contents
 of the pipeline as long as the digital and intellectual contents policies
-are respected.
+are applied.
  
 Understanding the parametters
 the parametters are capture by the sys.argv module
