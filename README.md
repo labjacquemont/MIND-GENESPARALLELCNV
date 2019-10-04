@@ -24,6 +24,7 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 
 
 3) Download and install PennCNV and QuantiSNP from the link below:
+
    http://penncnv.openbioinformatics.org/en/latest/
    https://github.com/WGLab/PennCNV
    https://sites.google.com/site/quantisnp/home
