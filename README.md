@@ -56,7 +56,26 @@ rs115991721|1|767096|0.013|0
 rs12562034|1|768448|0.275|1
 rs116390263|1|772927|0.352|0.997
 
-For the remaining input file format, please refer to the pennCNV official readme web site.
+For the remaining input file format, please refer to the PennCNV official readme web site.
+
+2) Download the pipeline scripts and save them in the master project repository. The user poroject repository
+should look as bellow.
+
+  ~/Master_Project_repository/
+   /---/QuantiSNPexecutor.sh
+   /---/PennCNVexecutor.sh
+   /---/ressources/
+   /---/ressources/sex_file
+   /---/ressources/cohort_PFB_file.pfb
+   /---/ressources/cohort_gcModel_file.txt
+   /---/CNVquantiSNP
+   /---/CNVpennCNV
+   /---/pyCNVCallingParallel.py
+   /---/listSelectedIDforHMM.txt
+   /---/myPersonalProjectHMM
+
+
+
 After formatting the raw inpute signal file, one might need run the compute summary quality script, which will
 generate log quality file for each individual.
 
