@@ -65,7 +65,7 @@ For the remaining input file format, please refer to the PennCNV official readme
    then, unzip CNV-calling-master && cd CNV-calling-master
    
 The user project repository should look as bellow.
-
+![alt text](images/InstallRepo.png)
 
 After formatting the raw inpute signal file, one might need run the compute summary quality script, which will
 generate log quality file for each individual.
