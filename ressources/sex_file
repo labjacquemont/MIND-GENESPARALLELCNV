@@ -1,4 +1,5 @@
-#Sex file
+THIS IS WHERE WE SAVE THE SEX FILE (require by PennCNV and QuantiSNP)
+Sex file
 This is a tab delimited file:
 column 1 : sample name
 column 2 : sample sex as (male or female)
