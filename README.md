@@ -68,6 +68,34 @@ The user project repository should look as below.
 
 ![alt text](images/InstallRepo.png)
 
+Before running the pipeline, one need to assure to compute the pfb file required by PennCNV.
+To do so, the user should shuffle a list of at leat 300 samples from the project cohort and 
+compute the population B allele frequency using the provided PennCNV plugins.
+
+#PFB CREATING PROCESS
+
+
+#SAMPLES QUALITY INSPECTION
+The samples quality inspection is require for the HMM training step. As we recommend users to compute their
+cohort specific HMM uppon their cohort best qualified samples, once the quality summary data is generated for
+each sample, the bast samples must be selected according the following parametters:
+
+BAF_SD: B Allele Frequency standard deviation
+
+LRR_SD: Log R Ration  standard deviation
+
+WF: Wave Factor
+
+Call Rate: Samples Array Genotyping Call Rate
+
+To compute the summary quality data of the cohort, the user must provide to the pipeline the list of all individuals
+, and follow the pipeline how to in the readme.md file. Also, this step of the pipeline can be exectuted in parallel
+tasks.
+
+Here is an example of the command line on 10 subjects:
+
+
+
 
 After formatting the raw inpute signal file, one might need run the compute summary quality script, which will
 generate log quality file for each individual.
