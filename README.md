@@ -64,7 +64,7 @@ For the remaining input file format, please refer to the PennCNV official readme
    
    then, unzip CNV-calling-master && cd CNV-calling-master
    
-The user project repository should look as bellow.
+The user project repository should look as below.
 
 ![alt text](images/InstallRepo.png)
 
