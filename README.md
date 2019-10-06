@@ -59,24 +59,10 @@ rs116390263|1|772927|0.352|0.997
 For the remaining input file format, please refer to the PennCNV official readme web site.
 
 2) Download the pipeline scripts and save them in the master project repository using the git commandline:
-   git clone 
+   git clone https://github.com/labjacquemont/CNV-calling.git
+   then, unzip CNV-calling-master && cd CNV-calling-master
+   
 The user project repository should look as bellow.
-
-  ~/Master_Project_repository/ 
-  
-   /---/QuantiSNPexecutor.sh 
-   
-   /---/PennCNVexecutor.sh 
-   
-   /---/ressources/
-   /---/ressources/myPersonalProjectHMM
-   /---/ressources/listSelectedIDforHMM.txt
-   /---/ressources/sex_file
-   /---/ressources/cohort_PFB_file.pfb
-   /---/ressources/cohort_gcModel_file.txt
-   /---/CNVquantiSNP
-   /---/CNVpennCNV
-   /---/pyCNVCallingParallel.py
 
 
 After formatting the raw inpute signal file, one might need run the compute summary quality script, which will
