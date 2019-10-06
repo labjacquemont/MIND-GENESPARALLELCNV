@@ -98,8 +98,7 @@ Here is an example of the command line on 10 subjects:
 
 The output should looks like the printscreen below:
 
-
-
+![alt text](images/output_quality_summary.png)
 
 
 After formatting the raw inpute signal file, one might need run the compute summary quality script, which will
