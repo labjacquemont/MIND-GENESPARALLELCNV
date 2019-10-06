@@ -61,9 +61,12 @@ For the remaining input file format, please refer to the PennCNV official readme
 2) Download the pipeline scripts and save them in the master project repository. The user poroject repository
 should look as bellow.
 
-  ~/Master_Project_repository/
-   /---/QuantiSNPexecutor.sh
-   /---/PennCNVexecutor.sh
+  ~/Master_Project_repository/ 
+  
+   /---/QuantiSNPexecutor.sh 
+   
+   /---/PennCNVexecutor.sh 
+   
    /---/ressources/
    /---/ressources/sex_file
    /---/ressources/cohort_PFB_file.pfb
