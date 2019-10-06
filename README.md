@@ -94,6 +94,11 @@ tasks.
 
 Here is an example of the command line on 10 subjects:
 
+> time ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False quality > ./outputExamples/output_for_summary_quality_example_10samples.txt
+
+The output should looks like the printscreen below:
+
+
 
 
 
