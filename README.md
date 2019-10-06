@@ -72,10 +72,10 @@ Before running the pipeline, one need to assure to compute the pfb file required
 To do so, the user should shuffle a list of at leat 300 samples from the project cohort and 
 compute the population B allele frequency using the provided PennCNV plugins.
 
-#PFB CREATING PROCESS
+# PFB CREATING PROCESS
 
 
-#SAMPLES QUALITY INSPECTION
+# SAMPLES QUALITY INSPECTION
 The samples quality inspection is require for the HMM training step. As we recommend users to compute their
 cohort specific HMM uppon their cohort best qualified samples, once the quality summary data is generated for
 each sample, the bast samples must be selected according the following parametters:
