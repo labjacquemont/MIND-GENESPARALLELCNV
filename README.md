@@ -118,7 +118,7 @@ Using linux classic oneliner command lines, one can filter out bad quality sampl
 with at most an LLR_SD value of 0.20 or lower. Why .20 or lower? because PennCNV HMM training default QC only accept
 samples quality that passing the indicated threshold.
 
-# Generate GC correct per SNP data
+# Generate HMM correct per SNP data
 
 Now that we have the best quality samples, one can compute the HMM trainning using the option "hmm". Before launching the analysis, make sure that the list of the best quality samples is already created and specified in the config file. Also on must indicate the location to save the hmm file. This process can not be executed in parallel and can last between 1-2hr for a sample size of ~400 individuals. To start the analysis, follow the command line below:
 
@@ -133,7 +133,9 @@ The HMM file should looks like the printscreen below.
 
 ![alt text](images/HMM.png)
 
-# CNV detection (PennCNV and QuantiSNP) (PennCNV or QuantiSNP)
+#     CNV detection
+# (PennCNV and QuantiSNP)
+# (PennCNV or QuantiSNP)
 
 The PennCNV running dependencies is now satisfied, now one can run the CNV detection by PennCNV or QuantiSNP, or by both together. This example we will call the CNV by each algorithm separatly. This process is entirely parallelizable with high efficiency. In other to activate the PennCNV CNV calling option, the user must provide the CNV detection option as "detect" and as allways, set the PennCNV option to "True". Here is the command line example to call the CNV with PennCNV in parallele.
 
