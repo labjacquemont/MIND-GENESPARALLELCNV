@@ -118,7 +118,9 @@ Using linux classic oneliner command lines, one can filter out bad quality sampl
 with at most an LLR_SD value of 0.20 or lower. Why .20 or lower? because PennCNV HMM training default QC only accept
 samples quality that passing the indicated threshold.
 
-Now that we have the best quality samples, we can compute the HMM trainning using the option "hmm", a different execution option available on the pipeline. Before launching the analysis, make sure that the list of the best quality samples is already created and specified in the config file. Also on must indicate the location to save the hmm file. This process can not be executed in parallel and can last between 1-2hr for a sample size of ~400 individuals. To start the analysis, follow the command line below:
+# Generate GC correct per SNP data
+
+Now that we have the best quality samples, one can compute the HMM trainning using the option "hmm". Before launching the analysis, make sure that the list of the best quality samples is already created and specified in the config file. Also on must indicate the location to save the hmm file. This process can not be executed in parallel and can last between 1-2hr for a sample size of ~400 individuals. To start the analysis, follow the command line below:
 
 > ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False hmm
 
@@ -129,12 +131,58 @@ The hmm process example using 10 samples last ~10mn, it saves the results in the
 
 The HMM file should looks like the printscreen below.
 
+![alt text](images/HMM.png)
+
+# CNV detection (PennCNV and QuantiSNP) (PennCNV or QuantiSNP)
+
+The PennCNV running dependencies is now satisfied, now one can run the CNV detection by PennCNV or QuantiSNP, or by both together. This example we will call the CNV by each algorithm separatly. This process is entirely parallelizable with high efficiency. In other to activate the PennCNV CNV calling option, the user must provide the CNV detection option as "detect" and as allways, set the PennCNV option to "True". Here is the command line example to call the CNV with PennCNV in parallele.
+
+> ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False detect
+
+The results for 10 samples in parallele are generated in 45 seconds and use less than 1Mb of RAM memory. The PennCNV CNV detection results are save in the below folder:
+
+> /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVpennCNV/BATCH_00/CNV_DATA
+
+> autosome_sample1.rawcnv
+
+> gonosome_sample1.rawcnv
+
+> autosome_sample2.rawcnv
+
+> gonosome_sample2.rawcnv
+
+> ...
+
+> autosome_sample10.rawcnv
+
+> gonosome_sample10.rawcnv
+
+Here is a printscreen example of PennCNV output results for sample1
+
+![alt text](images/PennCNVdetect.png)
+
+Now, we will show the example of CNV calling by the QuantiSNP algorithm, it's the same command line but the PennCNV algorithm execution boolean will be set to False while the QuantiSNP one will be set to True alone. In this case, remember that the only valide CNV detection option is "detect", the two others are useless. The CNV calling by QuantiSNP, same as the PennCNV, is entirely parallelizable. Here is the command line example for the QuantiSNP execution.
+
+> ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config False True detect
+
+The analysis take ~4.5mn and use ~2Mb of RAM. The results are located in the following directory:
+
+> ls /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVquantiSNP/BATCH_00/sample1.outdir
+
+> sample1.cnv
+
+> sample1.loh
+
+> sample1.qc
+
+The QuantiSNP samples quality analysis generates quality assessment results per chromosome, since the users require often the quality results fot the whole individuals array, then we provide a script which is able to averaged and standardize the quality values.
+
+> /script localisation/ to do
+
+Here is the original printscreen for the QuantiSNP quality output. As we see the format is different than PennCNV, therefore the standardisation of both data format is required. 
 
 
-
-After formatting the raw inpute signal file, one might need run the compute summary quality script, which will
-generate log quality file for each individual.
-
+Here is a printscreen example of the QuantiSNP CNV detection results output.
 
 
 
