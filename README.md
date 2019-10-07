@@ -4,7 +4,7 @@ This section is specialy made for researcher lab that which to prepare their CNV
 
 Our goal in this section is to create a tool which will help researchers to better parse the UK biobank data at a low cost of computational ressources and efficient execution time. The scripts are located in repository called "UKBB_DATA_GENERATOR". The image below shows a summary view of the data preparation protocol. To have understanding of the protocol, it's recommended to study the scripts and any constructive suggestion will be wellcome and greatful.
 
-
+![alt text](images/HMM.png)
 
 # CNV-calling
 
