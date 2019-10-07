@@ -104,10 +104,10 @@ The output should looks like the printscreen below:
 The output results are located in the provided directory (config file):
 > ls /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVpennCNV/BATCH_00/LOG_DATA
 
-> autosome_sample1.log
-> autosome_sample2.log
-> ...
-> autosome_sample10.log
+> autosome_sample1.log 
+> autosome_sample2.log 
+> ... 
+> autosome_sample10.log 
 
 After formatting the raw inpute signal file, one might need run the compute summary quality script, which will
 generate log quality file for each individual.
