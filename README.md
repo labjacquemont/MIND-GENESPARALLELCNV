@@ -60,9 +60,10 @@ For the remaining input file format, please refer to the PennCNV official readme
 
 2) Download the pipeline scripts and save them in the master project repository using the git commandline:
    
-   git clone https://github.com/labjacquemont/CNV-calling.git
+   > git clone https://github.com/labjacquemont/CNV-calling.git
    
-   then, unzip CNV-calling-master && cd CNV-calling-master
+   then, 
+   > unzip CNV-calling-master && cd CNV-calling-master
    
 The user project repository should look as below.
 
