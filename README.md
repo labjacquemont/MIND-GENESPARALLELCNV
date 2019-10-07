@@ -1,4 +1,13 @@
+# Data input preparation
+
+This section is specialy made for researcher lab that which to prepare their CNV calling inpute file from the UKBB cohort. For those that are familiar with yhe UKBB (Uk biobank) cohort snp array genotyping data, it's easy to quickly realize that the data is presented in a high dimensional level and very high storage memory. The manipulation of these data is very challenging and for lab groups that does have computational ressources, this challenge difficultie might be increased.
+
+Our goal in this section is to create a tool which will help researchers to better parse the UK biobank data at a low cost of computational ressources and efficient execution time. The scripts are located in repository called "UKBB_DATA_GENERATOR". The image below shows a summary view of the data preparation protocol. To have understanding of the protocol, it's recommended to study the scripts and any constructive suggestion will be wellcome and greatful.
+
+
+
 # CNV-calling
+
 This pipeline is a warper tools which consist on helpping users to easily call CNV uppon array genotyping data, for example: illumina OMNI2.5, Infinium, or Affimetrix Axiom, genome wide 6.0 etc. The goal of this tool also consisted on helping users to call CNV in a high performance way, were all functions in the pipeline were optimized to use the least amount of computational (RAM) possible, to avoid generated the least possible temporary data, therefore, optimize the available storage space. Other than the scripts optimization, the pipeline is built to paralellize the jobs, meaning each individuals CNV calls is computing separatly in a single CPU core. To do so, openMP and mpi4py compiled with gcc base are required. The pipeline creates automaticaly all require folders, and both CNV calling algorithm results are store seperatly. The only human manual preprocesses that are require by the pipeline are:
 
 1) Make sure gcc based (glibc 2.6 or higher) for openMP is installed, it's usually already preinstalled on the linux OS (ubuntu or CentOS)
