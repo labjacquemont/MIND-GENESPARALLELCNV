@@ -158,6 +158,8 @@ The results for 10 samples in parallele are generated in 45 seconds and use less
 
 Here is a printscreen example of PennCNV output results for sample1
 
+![alt text](images/PennCNVdetect.png)
+
 Now, we will show the example of CNV calling by the QuantiSNP algorithm, it's the same command line but the PennCNV algorithm execution boolean will be set to False while the QuantiSNP one will be set to True alone. In this case, remember that the only valide CNV detection option is "detect", the two others are useless. The CNV calling by QuantiSNP, same as the PennCNV, is entirely parallelizable. Here is the command line example for the QuantiSNP execution.
 
 > ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config False True detect
@@ -178,9 +180,10 @@ The QuantiSNP samples quality analysis generates quality assessment results per 
 
 Here is the original printscreen for the QuantiSNP quality output. As we see the format is different than PennCNV, therefore the standardisation of both data format is required. 
 
+![alt text](images/QuantiSNPqual.png)
 
 Here is a printscreen example of the QuantiSNP CNV detection results output.
 
-
+![alt text](images/QuantiSNPcnv.png)
 
 
