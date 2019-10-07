@@ -73,10 +73,12 @@ Before running the pipeline, one need to assure to compute the pfb file required
 To do so, the user should shuffle a list of at leat 300 samples from the project cohort and 
 compute the population B allele frequency using the provided PennCNV plugins.
 
-# PFB CREATING PROCESS
+# Generate PFB per SNP data
+
+# Generate GC correct per SNP data
 
 
-# SAMPLES QUALITY INSPECTION
+# Generate samples quality summary data for inspection
 The samples quality inspection is require for the HMM training step. As we recommend users to compute their
 cohort specific HMM uppon their cohort best qualified samples, once the quality summary data is generated for
 each sample, the bast samples must be selected according the following parametters:
@@ -97,7 +99,7 @@ Here is an example of the command line on 10 subjects:
 
 > bash ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False quality > ./outputExamples/output_for_summary_quality_example_10samples.txt
 
-The output results should looks like the printscreen below:
+The execution last only 15 seconds for the analysis of 10 samples. The output results should looks like the printscreen below:
 
 ![alt text](images/output_quality_summary.png)
 
@@ -111,6 +113,23 @@ The output results files are located in the provided directory (config file):
 > ...
 
 > autosome_sample10.log
+
+Using linux classic oneliner command lines, one can filter out bad quality samples and keep the best ones 
+with at most an LLR_SD value of 0.20 or lower. Why .20 or lower? because PennCNV HMM training default QC only accept
+samples quality that passing the indicated threshold.
+
+Now that we have the best quality samples, we can compute the HMM trainning using the option "hmm", a different execution option available on the pipeline. Before launching the analysis, make sure that the list of the best quality samples is already created and specified in the config file. Also on must indicate the location to save the hmm file. This process can not be executed in parallel and can last between 1-2hr for a sample size of ~400 individuals. To start the analysis, follow the command line below:
+
+> ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False hmm
+
+The hmm process example using 10 samples last ~10mn, it saves the results in the ressources directory as below:
+> /ressources/myPersonalProjectHMM.hmm
+
+> /ressources/myPersonalProjectHMM.lrr_baf_pfb
+
+The HMM file should looks like the printscreen below.
+
+
 
 
 After formatting the raw inpute signal file, one might need run the compute summary quality script, which will
