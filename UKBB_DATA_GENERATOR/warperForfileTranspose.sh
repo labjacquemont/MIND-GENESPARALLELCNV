@@ -14,8 +14,11 @@
 # transposed.
 
 script=/path_to_UKBB_DATA_GENERATOR/formatUKBBdataToFinalReport.py
-chrom=$1
-maxMem=$2
+task=$1
+chrom=$2
+maxMem=$3
+pathRawData=$4
+options=$5
 
-mpiexec -np 2 python3 $script $chrom $maxMem
+mpiexec -np $task python3 $script $chrom $maxMem $pathRawData $options
 
