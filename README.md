@@ -99,9 +99,7 @@ WF: Wave Factor
 
 Call Rate: Samples Array Genotyping Call Rate
 
-To compute the summary quality data of the cohort, the user must provide to the pipeline the list of all individuals
-, and follow the pipeline how to in the readme.md file. Also, this step of the pipeline can be exectuted in parallel
-tasks.
+To compute the summary quality data of the cohort, the user must provide to the pipeline the list of all individuals and follow the instruction in the readme.md file. Also, this step of the pipeline can be exectuted in parallel tasks.
 
 Here is an example of the command line on 10 subjects:
 
@@ -128,7 +126,7 @@ samples quality that passing the indicated threshold.
 
 # Generate cohort specific HMM data
 
-Now that we have the best quality samples, one can compute the HMM trainning using the option "hmm". Before launching the analysis, make sure that the list of the best quality samples is already created and specified in the config file. Also on must indicate the location to save the hmm file. This process can not be executed in parallel and can last between 1-2hr for a sample size of ~400 individuals. To start the analysis, follow the command line below:
+Now that we have the best quality samples, one can compute the HMM trainning using the option "hmm". Before launching the analysis, make sure that the list of the best quality samples is already created and specified in the config file. Also one must indicate the location to save the hmm file. This process can not be executed in parallel and can last between 1-2hr for a sample size of ~400 individuals. To start the analysis, follow the command line below:
 
 > ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False hmm
 
@@ -143,11 +141,11 @@ The HMM file should looks like the printscreen below.
 
 # CNV detection
 
-The PennCNV running dependencies is now satisfied, now one can run the CNV detection by PennCNV or QuantiSNP, or by both together. This example we will call the CNV by each algorithm separatly. This process is entirely parallelizable with high efficiency. In other to activate the PennCNV CNV calling option, the user must provide the CNV detection option as "detect" and as allways, set the PennCNV option to "True". Here is the command line example to call the CNV with PennCNV in parallele.
+The PennCNV running dependencies are now satisfied. We can run the CNV detection by PennCNV or QuantiSNP, or by both together. In this example, we will call the CNVs by each algorithm separatly. This process is entirely parallelizable with high efficiency. In order to activate the PennCNV CNV calling option, the user must provide the CNV detection option as "detect" and as allways, set the PennCNV option to "True". Here is the command line example to call the CNV with PennCNV in parallele.
 
 > ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False detect
 
-The results for 10 samples in parallele are generated in 45 seconds and use less than 1Mb of RAM memory. The PennCNV CNV detection results are save in the below folder:
+The results for 10 samples in parallele are generated in 45 seconds and use less than 1Mb of RAM memory. The PennCNV CNV detection results are saved in the below folder:
 
 > /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVpennCNV/BATCH_00/CNV_DATA
 
@@ -169,7 +167,7 @@ Here is a printscreen example of PennCNV output results for sample1
 
 ![alt text](images/PennCNVdetect.png)
 
-Now, we will show the example of CNV calling by the QuantiSNP algorithm, it's the same command line but the PennCNV algorithm execution boolean will be set to False while the QuantiSNP one will be set to True alone. In this case, remember that the only valide CNV detection option is "detect", the two others are useless. The CNV calling by QuantiSNP, same as the PennCNV, is entirely parallelizable. Here is the command line example for the QuantiSNP execution.
+Now, we will show the example of CNV calling by the QuantiSNP algorithm. It's the same command line but the PennCNV algorithm execution boolean will be set to False while the QuantiSNP one will be set to True alone. In this case, remember that the only valide CNV detection option is "detect", the two others are useless. The CNV calling by QuantiSNP is also entirely parallelizable. Here is the command line example for the QuantiSNP execution.
 
 > ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config False True detect
 
@@ -183,11 +181,11 @@ The analysis take ~4.5mn and use ~2Mb of RAM. The results are located in the fol
 
 > sample1.qc
 
-The QuantiSNP samples quality analysis generates quality assessment results per chromosome, since the users require often the quality results fot the whole individuals array, then we provide a script which is able to averaged and standardize the quality values.
+The QuantiSNP samples quality analysis generates quality assessment results per chromosome, since the users require often the quality results for the whole individuals array, then we provide a script which is able to averaged and standardize the quality values.
 
 > /script localisation/ to do
 
-Here is the original printscreen for the QuantiSNP quality output. As we see the format is different than PennCNV, therefore the standardisation of both data format is required. 
+Here is the original printscreen for the QuantiSNP quality output. As we see the format is different from PennCNV one, therefore the standardisation of both data formats is required. 
 
 ![alt text](images/QuantiSNPqual.png)
 
