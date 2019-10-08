@@ -1,14 +1,14 @@
 # Data input preparation
 
-This section is specialy made for researcher lab that which to prepare their CNV calling inpute file from the UKBB cohort. For those that are familiar with yhe UKBB (Uk biobank) cohort snp array genotyping data, it's easy to quickly realize that the data is presented in a high dimensional level and very high storage memory. The manipulation of these data is very challenging and for lab groups that does have computational ressources, this challenge difficultie might be increased.
+This section is specialy made for research lab that whant to prepare their CNV calling input files from the UKBB cohort. For those that are familiar with the UKBB (Uk biobank) cohort snp array genotyping data, it's easy to quickly realize that the data are presented in a high dimensional level and very high storage memory. The manipulation of these data is very challenging and for lab groups that do not have computational ressources, this challenge difficulty might be increased.
 
-Our goal in this section is to create a tool which will help researchers to better parse the UK biobank data at a low cost of computational ressources and efficient execution time. The scripts are located in repository called "UKBB_DATA_GENERATOR". The image below shows a summary view of the data preparation protocol. To have understanding of the protocol, it's recommended to study the scripts and any constructive suggestion will be wellcome and greatful.
+Our goal in this section is to create a tool which will help researchers to better parse the UK biobank data at a low cost of computational ressources and efficient execution time. The scripts are located in repository called "UKBB_DATA_GENERATOR". The image below shows a summary view of the data preparation protocol. To better understand the protocol, it's recommended to study the scripts and any constructive suggestion will be wellcome and greatful.
 
 ![alt text](images/UKBB_data_prepare_image.png)
 
 # CNV-calling
 
-This pipeline is a warper tools which consist on helpping users to easily call CNV uppon array genotyping data, for example: illumina OMNI2.5, Infinium, or Affimetrix Axiom, genome wide 6.0 etc. The goal of this tool also consisted on helping users to call CNV in a high performance way, were all functions in the pipeline were optimized to use the least amount of computational (RAM) possible, to avoid generated the least possible temporary data, therefore, optimize the available storage space. Other than the scripts optimization, the pipeline is built to paralellize the jobs, meaning each individuals CNV calls is computing separatly in a single CPU core. To do so, openMP and mpi4py compiled with gcc base are required. The pipeline creates automaticaly all require folders, and both CNV calling algorithm results are store seperatly. The only human manual preprocesses that are require by the pipeline are:
+This pipeline is a warper tools which will help users to easily call CNV uppon array genotyping data like illumina OMNI2.5, Infinium, or Affimetrix Axiom, genome wide 6.0, etc... . The goal of this tool also consist on helping users to call CNV in a high performance way, where all functions in the pipeline are optimized to use the least amount of memory (RAM) possible, to avoid generating the least possible temporary data and optimize the available storage space. Other than the scripts optimization, the pipeline is built to paralellize the jobs: meaning each individual CNV calls are computing separatly in a single CPU core. To do so, openMP and mpi4py compiled with gcc base are required. The pipeline creates automaticaly all required folders, and both CNV calling algorithms (PennCNV and QuantiSNP) results are stored seperatly. The only human manual preprocesses that are required by the pipeline are:
 
 1) Make sure gcc based (glibc 2.6 or higher) for openMP is installed, it's usually already preinstalled on the linux OS (ubuntu or CentOS)
 
@@ -16,20 +16,20 @@ This pipeline is a warper tools which consist on helpping users to easily call C
 
    https://pkgs.org/
 
-2) Insure that python 3.X is available on the machine and the mpy4py module is installed, since many other statistical module might be required by the CNV calling tools, it might be recommended to install anaconda. 
+2) Ensure that python 3.X is available on the machine and the mpy4py module is installed. Since many other statistical modules might be required by the CNV calling tools, it is recommended to install anaconda. 
 
    Link to anaconda:
 
    https://www.anaconda.com/distribution/
 
-   from anaconda bin directory istall: getuser and mpy4py module, mpi4py should be gcc based version and not INTEL. instead of using pip or python -m pip for module installation, it's recommended to use conda for the module installation, because conda will install not only the requested module but also all required dependencies and libraries to help the module work as expected.
+   from anaconda bin directory istall: getuser and mpy4py modules. mpi4py should be gcc based version and not INTEL. instead of using pip or python -m pip for module installation, it's recommended to use conda for the module installation, because conda will install not only the requested module but also all required dependencies and libraries to help the module work as expected.
 
    Install mpi4py module
 
    cd /path_to_anaconda_install_dir/bin/ , then hit
    conda install -c conda-forge/label/gcc7 mpi4py
 
-   then follow the onscreen instruction. The above module is important for the task parallelisation.
+   then follow the onscreen instructions. The above module is important for the task of parallelisation.
 
 
 3) Download and install PennCNV and QuantiSNP from the link below:
@@ -40,16 +40,16 @@ This pipeline is a warper tools which consist on helpping users to easily call C
    
    https://sites.google.com/site/quantisnp/home
 
-   After compiling and install pennCNV according to the tool readme, it's important to compile the kext libraries located on the    PennCNV installation folder. These libraries are usefull for self HMM training.
+   After compiling and installing pennCNV according to the tool readme, it's important to compile the kext libraries located on the PennCNV installation folder. Those libraries are usefull for self HMM training.
 
-   Most researchers are already aware that genotyping quality may varies between individuals from the same cohort but also between genotyping technologies. Therefore, training HMM data integrity may difer from one genotyping technology to another, and could have negative consequence on CNV calling results. To fix this problem, it's alway better to built specific HMM for fpecific cohort. 
+   Most researchers are already aware that genotyping quality may varies between individuals from the same cohort but also between genotyping technologies. Therefore, training HMM data integrity may differ from one genotyping technology to another, and could have negative consequences on CNV calling results. To fix this problem, it's always better to build specific HMM for specific cohort. 
 
-4) Finaly, fill out the configuration file (.config file) with all required path and file path.
+4) Finaly, fill out the configuration file (.config file) with all required paths for the tools and files paths.
 
 
 # Running the pipeline scripts
 
-1) First, one need to make sure that all individuals signal files are well formated according to the bellow example, the name them as following: *SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt*
+1) First, one need to make sure that all individuals signal files are well formated according to the bellow example. Name them as following: *SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt*
 
 Input signal file example:
 
@@ -78,7 +78,7 @@ The user project repository should look as below.
 
 ![alt text](images/InstallRepo.png)
 
-Before running the pipeline, one need to assure to compute the pfb file required by PennCNV.
+Before running the pipeline, one need to compute the pfb file required by PennCNV.
 To do so, the user should shuffle a list of at leat 300 samples from the project cohort and 
 compute the population B allele frequency using the provided PennCNV plugins.
 
@@ -87,9 +87,9 @@ compute the population B allele frequency using the provided PennCNV plugins.
 # Generate GC correct per SNP data
 
 # Generate samples quality summary data for inspection
-The samples quality inspection is require for the HMM training step. As we recommend users to compute their
-cohort specific HMM uppon their cohort best qualified samples, once the quality summary data is generated for
-each sample, the bast samples must be selected according the following parametters:
+The samples quality inspection is required for the HMM training step. As we recommend users to compute their
+cohort specific HMM uppon their best qualified samples. Once the quality summary data is generated for
+each sample, the best samples must be selected according the following parametters:
 
 BAF_SD: B Allele Frequency standard deviation
 
