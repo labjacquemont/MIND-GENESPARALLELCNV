@@ -13,9 +13,18 @@
 # A the end, the temporary files will all need to be paste side by side knowing that their are already
 # transposed.
 
-script=/path_to_UKBB_DATA_GENERATOR/formatUKBBdataToFinalReport.py
-chrom=$1
-maxMem=$2
+# arg1: number of tasks
+# arg2: chromosome to analyse
+# arg3: required RAM memory to reserve for the process
+# arg4: root path to the raw data
+# arg5: the task option to execute  
 
-mpiexec -np 2 python3 $script $chrom $maxMem
+script=/path_to_UKBB_DATA_GENERATOR/formatUKBBdataToFinalReport.py
+task=$1
+chrom=$2
+maxMem=$3
+pathRawData=$4
+options=$5
+
+mpiexec -np $task python3 $script $chrom $maxMem $pathRawData $options
 

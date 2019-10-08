@@ -6,6 +6,113 @@ Our goal in this section is to create a tool which will help researchers to bett
 
 ![alt text](images/UKBB_data_prepare_image.png)
 
+Before executing the analysis, here is an overview of the working repository.
+
+```text
+# Below is the user specified B Allele frequency score data location
+
+/~/BAFrawData
+
+/~/BAFrawData/UKB_genotype_baf
+
+/~/BAFrawData/UKB_genotype_baf/ukb_baf_chr1_v2.txt
+...
+/~/BAFrawData/UKB_genotype_baf/ukb_baf_chrY_v2.txt
+
+/~/BAFrawData/UKB_genotype_baf/completeMergeBAF_chr1
+...
+/~/BAFrawData/UKB_genotype_baf/completeMergeBAF_chrY
+
+/~/BAFrawData/UKB_genotype_baf/fragmentedBAF_chr1
+...
+/~/BAFrawData/UKB_genotype_baf/fragmentedBAF_chrY
+
+# Below is the user specified Log R Ration score data location
+
+/~/LRRrawData
+
+/~/LRRrawData/UKB_genotype_l2r
+
+/~/LRRrawData/UKB_genotype_l2r/ukb_l2r_chr1_v2.txt
+...
+/~/LRRrawData/UKB_genotype_l2r/ukb_l2r_chrY_v2.txt
+
+/~/LRRrawData/UKB_genotype_l2r/completeMergeLRR_chr1
+...
+/~/LRRrawData/UKB_genotype_l2r/completeMergeLRR_chrY
+
+/~/LRRrawData/UKB_genotype_l2r/fragmentedLRR_chr1
+...
+/~/LRRrawData/UKB_genotype_l2r/fragmentedLRR_chrY
+
+# Below is the user specifile confidence score data location
+
+/~/CRrawData
+
+/~/CRrawData/UKB_genotype_con
+
+/~/CRrawData/GCSCORErawData/ukb_con_chr1_v2.txt
+...
+/~/CRrawData/GCSCORErawData/ukb_con_chrY_v2.txt
+
+/~/CRrawData/GCSCORErawData/completeMergeCR_chr1
+...
+/~/CRrawData/GCSCORErawData/completeMergeCR_chrY
+
+/~/CRrawData/GCSCORErawData/fragmentedCR_chr1
+...
+/~/CRrawData/GCSCORErawData/fragmentedCR_chrY
+
+# This is the user specified fam file data location
+
+/~/UKBB_fam_file/ukbb.fam
+
+# This is the user specified SNP data location
+
+/~/SNPrawData/ukbbSNP_chr1.bim
+...
+/~/SNPrawData/ukbbSNP_chrY.bim
+
+# If the user specified the same root directory as
+# final report output, then the results repositories
+# will look like below:
+
+/~/OutputFinalReport_00
+...
+/~/OutputFinalReport_09
+```
+
+The scripts that help to format and generate the final reports should be located at:
+```text
+/~/CNV-calling/UKBB_DATA_GENERATOR/formatUKBBdataToFinalReport.py
+/~/CNV-calling/UKBB_DATA_GENERATOR/generateFinalReportFromTransposeData.py
+/~/CNV-calling/UKBB_DATA_GENERATOR/warperForfileTranspose.sh
+/~/CNV-calling/UKBB_DATA_GENERATOR/warperForFinalreportOutput.sh
+```
+Before starting to extract reduced final report input for CNV calling from the UKBB big matrixes, on need to reformat the raw downloaded data. As indicated in the summary image above, UKBB provide the BAF, LRR, ConfidenceScore in big high dimensional matrixes. We also need to take in count that the sample and the SNP line up in the files remain the same in all of the other files.
+
+1. To start formating the raw data, the user should run the command line below, it can be run sequencialy or in parallel. Three task is available in this plugin and the user is able to provide them in parametter. 
+Lets run an example of the three available task in parallele:
+```bash
+bash ./warperForfileTranspose.sh 3 1 5 . BAF:LRR:CR
+```
+Thee above option will run 3 parallel tasks, each on a different processor. This is why the per task reserve RAM memory should be available on the computing machine, otherwise, the execution will raise and Out Of Memory error.
+here is a definition of the above used parametter in the same order they were used:
+```text
+arg1: chromosome to analyse
+arg2: required RAM memory to reserve for the process
+arg3: root path to the raw data
+arg4: the task option to execute
+```
+In the other hand, if one want to execute the process sequencialy for any reason, here is a useful command line:
+```bash
+for option in BAF LRR CR;
+        do
+        	bash ./warperForfileTranspose.sh 1 1 5 . "$option";
+        done;
+```
+In the above case, the user is computing sequencial jobs, therefore only one CPU is required while the amount of required memory remain unchanged.
+
 # CNV-calling
 
 This pipeline is a warper tools which will help users to easily call CNV uppon array genotyping data like illumina OMNI2.5, Infinium, or Affimetrix Axiom, genome wide 6.0, etc... . The goal of this tool also consist on helping users to call CNV in a high performance way, where all functions in the pipeline are optimized to use the least amount of memory (RAM) possible, to avoid generating the least possible temporary data and optimize the available storage space. Other than the scripts optimization, the pipeline is built to paralellize the jobs: meaning each individual CNV calls are computing separatly in a single CPU core. To do so, openMP and mpi4py compiled with gcc base are required. The pipeline creates automaticaly all required folders, and both CNV calling algorithms (PennCNV and QuantiSNP) results are stored seperatly. The only human manual preprocesses that are required by the pipeline are:
@@ -24,11 +131,14 @@ This pipeline is a warper tools which will help users to easily call CNV uppon a
 
    from anaconda bin directory istall: getuser and mpy4py modules. mpi4py should be gcc based version and not INTEL. instead of using pip or python -m pip for module installation, it's recommended to use conda for the module installation, because conda will install not only the requested module but also all required dependencies and libraries to help the module work as expected.
 
-   Install mpi4py module
-
-   cd /path_to_anaconda_install_dir/bin/ , then hit
+```bash
+   Install mpi4py module &&
+   cd /path_to_anaconda_install_dir/bin/
+```
+Then hit,
+```
    conda install -c conda-forge/label/gcc7 mpi4py
-
+```
    then follow the onscreen instructions. The above module is important for the task of parallelisation.
 
 
@@ -49,8 +159,13 @@ This pipeline is a warper tools which will help users to easily call CNV uppon a
 
 # Running the pipeline scripts
 
-1) First, one need to make sure that all individuals signal files are well formated according to the bellow example. Name them as following: *SAMPLE_NAME_1.Signal.txt, SAMPLE_NAME_2.Signal.txt, ... ,SAMPLE_NAME_n.Signal.txt*
-
+1) First, one need to make sure that all individuals signal files are well formated according to the bellow example. Name them as following: 
+```list
+SAMPLE_NAME_1.txt
+SAMPLE_NAME_2.txt
+...
+SAMPLE_NAME_n.txt
+```
 Input signal file example:
 
 Name | Chr | Position | Samplename.Log R Ratio | SampleName.B Allele Freq
@@ -69,11 +184,16 @@ For the remaining input file format, please refer to the PennCNV official readme
 
 2) Download the pipeline scripts and save them in the master project repository using the git commandline:
    
-   > git clone https://github.com/labjacquemont/CNV-calling.git
+   ```bash
+   git clone https://github.com/labjacquemont/CNV-calling.git
+   ```
    
    then, 
-   > unzip CNV-calling-master && cd CNV-calling-master
    
+   ```bash
+   unzip CNV-calling-master && cd CNV-calling-master
+   ```
+
 The user project repository should look as below.
 
 ![alt text](images/InstallRepo.png)
@@ -91,35 +211,31 @@ The samples quality inspection is required for the HMM training step. As we reco
 cohort specific HMM uppon their best qualified samples. Once the quality summary data is generated for
 each sample, the best samples must be selected according the following parametters:
 
-BAF_SD: B Allele Frequency standard deviation
-
-LRR_SD: Log R Ration  standard deviation
-
-WF: Wave Factor
-
-Call Rate: Samples Array Genotyping Call Rate
+* BAF_SD: B Allele Frequency standard deviation
+* LRR_SD: Log R Ration  standard deviation
+* WF: Wave Factor
+* Call Rate: Samples Array Genotyping Call Rate
 
 To compute the summary quality data of the cohort, the user must provide to the pipeline the list of all individuals and follow the instruction in the readme.md file. Also, this step of the pipeline can be exectuted in parallel tasks.
 
 Here is an example of the command line on 10 subjects:
 
-> bash ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False quality > ./outputExamples/output_for_summary_quality_example_10samples.txt
-
+```bash
+bash ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False quality > ./outputExamples/output_for_summary_quality_example_10samples.txt
+```
 The execution last only 15 seconds for the analysis of 10 samples. The output results should looks like the printscreen below:
 
 ![alt text](images/output_quality_summary.png)
 
 The output results files are located in the provided directory (config file):
-> ls /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVpennCNV/BATCH_00/LOG_DATA
 
-> autosome_sample1.log 
-
-> autosome_sample2.log
-
-> ...
-
-> autosome_sample10.log
-
+```bash
+ls /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVpennCNV/BATCH_00/LOG_DATA
+autosome_sample1.log 
+autosome_sample2.log
+ ...
+autosome_sample10.log
+```
 Using linux classic oneliner command lines, one can filter out bad quality samples and keep the best ones 
 with at most an LLR_SD value of 0.20 or lower. Why .20 or lower? because PennCNV HMM training default QC only accept
 samples quality that passing the indicated threshold.
@@ -128,13 +244,15 @@ samples quality that passing the indicated threshold.
 
 Now that we have the best quality samples, one can compute the HMM trainning using the option "hmm". Before launching the analysis, make sure that the list of the best quality samples is already created and specified in the config file. Also one must indicate the location to save the hmm file. This process can not be executed in parallel and can last between 1-2hr for a sample size of ~400 individuals. To start the analysis, follow the command line below:
 
-> ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False hmm
+```bash
+./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False hmm
+```bash
 
 The hmm process example using 10 samples last ~10mn, it saves the results in the ressources directory as below:
-> /ressources/myPersonalProjectHMM.hmm
-
-> /ressources/myPersonalProjectHMM.lrr_baf_pfb
-
+```bash
+/ressources/myPersonalProjectHMM.hmm
+/ressources/myPersonalProjectHMM.lrr_baf_pfb
+```
 The HMM file should looks like the printscreen below.
 
 ![alt text](images/HMM.png)
@@ -143,48 +261,43 @@ The HMM file should looks like the printscreen below.
 
 The PennCNV running dependencies are now satisfied. We can run the CNV detection by PennCNV or QuantiSNP, or by both together. In this example, we will call the CNVs by each algorithm separatly. This process is entirely parallelizable with high efficiency. In order to activate the PennCNV CNV calling option, the user must provide the CNV detection option as "detect" and as allways, set the PennCNV option to "True". Here is the command line example to call the CNV with PennCNV in parallele.
 
-> ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False detect
+```bash
+./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True False detect
+```
 
 The results for 10 samples in parallele are generated in 45 seconds and use less than 1Mb of RAM memory. The PennCNV CNV detection results are saved in the below folder:
 
-> /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVpennCNV/BATCH_00/CNV_DATA
-
-> autosome_sample1.rawcnv
-
-> gonosome_sample1.rawcnv
-
-> autosome_sample2.rawcnv
-
-> gonosome_sample2.rawcnv
-
-> ...
-
-> autosome_sample10.rawcnv
-
-> gonosome_sample10.rawcnv
-
+```bash
+ls  /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVpennCNV/BATCH_00/CNV_DATA
+autosome_sample1.rawcnv
+gonosome_sample1.rawcnv
+autosome_sample2.rawcnv
+gonosome_sample2.rawcnv
+...
+autosome_sample10.rawcnv
+gonosome_sample10.rawcnv
+```
 Here is a printscreen example of PennCNV output results for sample1
 
 ![alt text](images/PennCNVdetect.png)
 
 Now, we will show the example of CNV calling by the QuantiSNP algorithm. It's the same command line but the PennCNV algorithm execution boolean will be set to False while the QuantiSNP one will be set to True alone. In this case, remember that the only valide CNV detection option is "detect", the two others are useless. The CNV calling by QuantiSNP is also entirely parallelizable. Here is the command line example for the QuantiSNP execution.
 
-> ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config False True detect
-
+```bash
+ ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config False True detect
+```
 The analysis take ~4.5mn and use ~2Mb of RAM. The results are located in the following directory:
-
-> ls /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVquantiSNP/BATCH_00/sample1.outdir
-
-> sample1.cnv
-
-> sample1.loh
-
-> sample1.qc
+```bash
+ls /Path_to_the_pipeline_installation_repository/AnalysisScripts_CNVcalling/CNVquantiSNP/BATCH_00/sample1.outdir
+sample1.cnv
+sample1.loh
+sample1.qc
+```
 
 The QuantiSNP samples quality analysis generates quality assessment results per chromosome, since the users require often the quality results for the whole individuals array, then we provide a script which is able to averaged and standardize the quality values.
-
-> /script localisation/ to do
-
+```bash
+/script localisation/ to do
+```
 Here is the original printscreen for the QuantiSNP quality output. As we see the format is different from PennCNV one, therefore the standardisation of both data formats is required. 
 
 ![alt text](images/QuantiSNPqual.png)

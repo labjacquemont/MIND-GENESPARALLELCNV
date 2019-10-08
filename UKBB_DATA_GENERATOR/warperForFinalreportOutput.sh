@@ -3,12 +3,18 @@
 # require openmpi/3.1.2
 # require mpi4py/3.0.0
 
-# The parametter chunk is the batch size the user want to create. For example, for a cohort of 500000 individuals if the
-# user indicate chuck as 50000, the scripts will split all individuals but it will organise them in 10 batches where each have ~50k
-# samples.
+# 1st parametter: Number of paralel task to compute, (2) is required if the user need to analyse BAF and LLR jointly
+# 2nd parametter: Interval of sample to extract from a known sample list.
+# 3rd parametter: Based directory path where transposed data are located 
+# 4th parametter: Output directory path to save reduced final report input for CNV calling
+
 # This process is highly parallelizable.
 
 script=/path_to_the_folder/UKBB_DATA_GENERATOR/generateFinalReportFromTransposeData.py
 tasks=$1
-chunk=$2
-mpirun -np $tasks python3 $script $chunk
+intervallToAnalyse=$2
+baserawDir=$3
+finalRepDir=$4
+
+mpirun -np $tasks python3 $script $intervallToAnalyse $baserawDir $finalRepDir
+
