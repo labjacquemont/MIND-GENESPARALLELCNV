@@ -159,6 +159,8 @@ Then hit,
 
 # Running the pipeline scripts
 
+![alt text](images/CNVcallingreqirements.png)
+
 1) First, one need to make sure that all individuals signal files are well formated according to the bellow example. Name them as following: 
 ```list
 SAMPLE_NAME_1.txt
@@ -203,6 +205,49 @@ To do so, the user should shuffle a list of at leat 300 samples from the project
 compute the population B allele frequency using the provided PennCNV plugins.
 
 # Generate PFB per SNP data
+
+PFB data is reqired for CNV calling by pennCNV. To compute pfb for a CNV calling project by PennCNV, it exists 2 possibility based on the sample size available. A sample size of the project cohort less than ~300 samples means that there is not enough observation to compute statisticaly significant population frequency. Therefore the user must download a generic version of the pfb data that reflect the cohort ancestry. In this case, the user can follow the bellow procedure.
+
+The script belong to PennCNV groups (autorship name Leandro Lima <lelimaufc@gmail.com) and is available at the PennCNV-seq github repository:
+```bash
+cd PennCNV-Seq
+mkdir /path_to_the_pfb_dataset_downloaded_directory/downloadedGenericPFB
+Execute the bash script download_and_format_database.sh by following the help instructions, for example:
+./download_and_format_database.sh hg19 1 0
+Means that the user chose to download hg19 version of the pfb dataset, (1) choose to split the dataset by chromosome, (0) doesn't want do download the fasta files
+```
+The download will need to be saved in /path_to_the_pfb_dataset_downloaded_directory/downloadedGenericPFB folder then locate the files with the following pattern "hg38_ALL.sites.2015_08.txt". Since the UCSC dataset doesn't necessairely provide similar SNP name as the commercial ones (Affimetrix, Illumina, etc), it's important that the user match their project SNP names to the downloaded one. 
+Here is an example of the download file:
+```text
+Chr	Position	Ref	Alt	PFB	Name
+Y	1085877	G	A	0.000399361	.
+Y	1086306	A	C	0.00599042	.
+Y	1086318	G	A	0.000399361	.
+Y	1086324	T	G	0.000599042	.
+Y	1086388	T	G	0.000998403	.
+Y	1086395	C	T	0.000199681	.
+Y	1086416	G	A	0.000599042	.
+Y	1086422	A	G	0.0201677	.
+Y	1086430	G	A	0.0229633	.
+Y	1086494	G	A	0.0890575	.
+```
+Here is the expected PFB format:
+```text
+Name    Chr     Position        PFB
+rs116720794     1       729632  0.9712014314928431
+rs3131972       1       752721  0.8398232323232327
+rs12184325      1       754105  0.9630711422845696
+rs3131962       1       756604  0.8488260000000004
+rs114525117     1       759036  0.9528859275053313
+rs3115850       1       761147  0.8336490280777547
+rs115991721     1       767096  0.012686746987951802
+rs12562034      1       768448  0.8934478957915828
+rs116390263     1       772927  0.9518046092184369
+rs4040617       1       779322  0.14156425702811246
+```
+
+The user must intersect the project SNP locus data to the downloaded PFB data in other to produce the expect PFB data as formatted above. To do so, one might need the betools intersectbed available at (link)
+
 
 # Generate GC correct per SNP data
 
@@ -259,6 +304,8 @@ The HMM file should looks like the printscreen below.
 
 # CNV detection
 
+![alt text](images/CNVcallingResultsAndFiltering.png)
+
 The PennCNV running dependencies are now satisfied. We can run the CNV detection by PennCNV or QuantiSNP, or by both together. In this example, we will call the CNVs by each algorithm separatly. This process is entirely parallelizable with high efficiency. In order to activate the PennCNV CNV calling option, the user must provide the CNV detection option as "detect" and as allways, set the PennCNV option to "True". Here is the command line example to call the CNV with PennCNV in parallele.
 
 ```bash
@@ -306,4 +353,10 @@ Here is a printscreen example of the QuantiSNP CNV detection results output.
 
 ![alt text](images/QuantiSNPcnv.png)
 
+
+# CNV quality check and annotation for functional inquireries
+
+
+
+![alt text](images/CNVcallingQualityImageAnnotation.png)
 
