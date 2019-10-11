@@ -4,8 +4,9 @@ This section is specialy made for research lab that whant to prepare their CNV c
 
 Our goal in this section is to create a tool which will help researchers to better parse the UK biobank data at a low cost of computational ressources and efficient execution time. The scripts are located in repository called "UKBB_DATA_GENERATOR". The image below shows a summary view of the data preparation protocol. To better understand the protocol, it's recommended to study the scripts and any constructive suggestion will be wellcome and greatful.
 
-![alt text](images/UKBB_data_prepare_image.png)
-
+<p align="center">
+  <img src="images/UKBB_data_prepare_image.png" width="600" alt="accessibility text">
+</p>
 Before executing the analysis, here is an overview of the working repository.
 
 ```text
@@ -159,8 +160,10 @@ Then hit,
 
 # Running the pipeline scripts
 
-![alt text](images/CNVcallingreqirements.png)
 
+<p align="center">
+  <img src="images/CNVcallingreqirements.png" width="400" alt="accessibility text">
+</p>
 1) First, one need to make sure that all individuals signal files are well formated according to the bellow example. Name them as following: 
 ```list
 SAMPLE_NAME_1.txt
@@ -198,8 +201,10 @@ For the remaining input file format, please refer to the PennCNV official readme
 
 The user project repository should look as below.
 
-![alt text](images/InstallRepo.png)
 
+<p align="center">
+  <img src="images/InstallRepo.png" width="400" alt="accessibility text">
+</p>
 Before running the pipeline, one need to compute the pfb file required by PennCNV.
 To do so, the user should shuffle a list of at leat 300 samples from the project cohort and 
 compute the population B allele frequency using the provided PennCNV plugins.
@@ -248,6 +253,14 @@ rs4040617       1       779322  0.14156425702811246
 
 The user must intersect the project SNP locus data to the downloaded PFB data in other to produce the expect PFB data as formatted above. To do so, one might need the betools intersectbed available at (link)
 
+If the user cohort size is graiter than 300 samples, then the user can compute the PFB dataset on his own cohort intensity files. To do so, the user have 2 options computing linearly the analysis without worry about additional files manipulation. The user need to create a list of the raw samples, each preceding their path. The user must not forget to select the best qualified samples (See the CNV calling requirement preparation). Prior the this analysis, the user must compute the summary quality analysis for all the samples then extract the best qualified samples based specific quality threshold criterion (BAF_SD: B Allele frequency standard deviation), LRR_SD: Log R Ratio standard deviation, ||WF||: Absolute value of the wave factor, The sample array call rate(Example are provided graph). 
+
+The user can use the compute_pfb.pl plugins locate in the installation directory of PennCNV, follow the command line below to compute the PFB:
+
+command line to compute pfb
+
+The above procedure require high memory usage since the matrix of individuals by marker will be loaded in the computer RAM memory, followed by subsequent normalisation analysis. This methode is not recommended for good productivity analysis. The alternative way is to compute the PFB data is more efficient than above. The user must fragment the best qualified sample data into chromosomes and remake a list per chromosome for the PFB analysis. Here we provide some scripts which will allow the user
+to compute pfb analysis task per chromosomes 
 
 # Generate GC correct per SNP data
 
@@ -270,7 +283,9 @@ bash ./cnvCallingPipelineWarper.sh 0 10 0-10 $PWD/PipelineInput.config True Fals
 ```
 The execution last only 15 seconds for the analysis of 10 samples. The output results should looks like the printscreen below:
 
-![alt text](images/output_quality_summary.png)
+<p align="center">
+  <img src="images/output_quality_summary.png" width="800" alt="accessibility text">
+</p>
 
 The output results files are located in the provided directory (config file):
 
@@ -300,11 +315,15 @@ The hmm process example using 10 samples last ~10mn, it saves the results in the
 ```
 The HMM file should looks like the printscreen below.
 
-![alt text](images/HMM.png)
+<p align="center">
+  <img src="images/HMM.png" width="400" alt="accessibility text">
+</p>
 
 # CNV detection
 
-![alt text](images/CNVcallingResultsAndFiltering.png)
+<p align="center">
+  <img src="images/CNVcallingResultsAndFiltering.png" width="400" alt="accessibility text">
+</p>
 
 The PennCNV running dependencies are now satisfied. We can run the CNV detection by PennCNV or QuantiSNP, or by both together. In this example, we will call the CNVs by each algorithm separatly. This process is entirely parallelizable with high efficiency. In order to activate the PennCNV CNV calling option, the user must provide the CNV detection option as "detect" and as allways, set the PennCNV option to "True". Here is the command line example to call the CNV with PennCNV in parallele.
 
@@ -326,7 +345,9 @@ gonosome_sample10.rawcnv
 ```
 Here is a printscreen example of PennCNV output results for sample1
 
-![alt text](images/PennCNVdetect.png)
+<p align="center">
+  <img src="images/PennCNVdetect.png" width="600" alt="accessibility text">
+</p>
 
 Now, we will show the example of CNV calling by the QuantiSNP algorithm. It's the same command line but the PennCNV algorithm execution boolean will be set to False while the QuantiSNP one will be set to True alone. In this case, remember that the only valide CNV detection option is "detect", the two others are useless. The CNV calling by QuantiSNP is also entirely parallelizable. Here is the command line example for the QuantiSNP execution.
 
@@ -347,16 +368,19 @@ The QuantiSNP samples quality analysis generates quality assessment results per 
 ```
 Here is the original printscreen for the QuantiSNP quality output. As we see the format is different from PennCNV one, therefore the standardisation of both data formats is required. 
 
-![alt text](images/QuantiSNPqual.png)
+<p align="center">
+  <img src="images/QuantiSNPqual.png" width="600" alt="accessibility text">
+</p>
 
 Here is a printscreen example of the QuantiSNP CNV detection results output.
-
-![alt text](images/QuantiSNPcnv.png)
-
+<p align="center">
+  <img src="images/QuantiSNPcnv.png" width="700" alt="accessibility text">
+</p>
 
 # CNV quality check and annotation for functional inquireries
 
+<p align="center">
+  <img src="images/CNVcallingQualityImageAnnotation.png" width="700" alt="accessibility text">
+</p>
 
-
-![alt text](images/CNVcallingQualityImageAnnotation.png)
 
