@@ -223,12 +223,16 @@ Then hit,
   <img src="images/CNVcallingreqirements.png" width="400" alt="accessibility text">
 </p>
 1) First, one need to make sure that all individuals signal files are well formated according to the below example. Name them as following: 
-```bash
+
+```bash 
 SAMPLE_NAME_1.txt
 SAMPLE_NAME_2.txt
-...
+.
+.
+.
 SAMPLE_NAME_n.txt
 ```
+
 Input signal file example:
 
 Name | Chr | Position | Samplename.Log R Ratio | SampleName.B Allele Freq
