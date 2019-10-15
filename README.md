@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="images/MindGeneslogo.png" height= "50" width="1550" alt="accessibility text">
+  <img src="images/MindGeneslogo.png" height= "48" width="1550" alt="accessibility text">
 </p>
 
 
@@ -10,12 +10,12 @@ As indicated Mind&GenesParallelCNV is a freeware and opensource linux based tool
 
 To know more about our lab research or our team, please reach the following link: http://www.minds-genes.org/
 
-Author and contact for the tool:
-Martineau Jean-Louis
+Author: Martineau Jean-Louis
 contact: 
 * matineau.jean-louis@umontreal.ca 
 * martineau.jean-louis@recherche-ste-justine.qc.ca
 
+This tool is implemented as collaboration to LabJacquemont
 
 # Data input preparation
 
