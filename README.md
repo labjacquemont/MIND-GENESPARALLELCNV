@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="images/MindGeneslogo.png" height= "309" width="7493" alt="accessibility text">
+  <img src="images/MindGeneslogo.png" height= "70" width="1600" alt="accessibility text">
 </p>
 
 # Mind&GenesParallelCNV
