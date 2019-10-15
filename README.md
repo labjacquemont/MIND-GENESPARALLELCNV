@@ -21,7 +21,7 @@ contact:
 
 This section is specialy made for research lab that whant to prepare their CNV calling input files from the UKBB cohort. For those that are familiar with the UKBB (Uk biobank) cohort snp array genotyping data, it's easy to quickly realize that the data are presented in a high dimensional level and very high storage memory. The manipulation of these data is very challenging and for lab groups that do not have computational ressources, this challenge difficulty might be increased.
 
-Our goal in this section is to create a tool which will help researchers to better parse the UK biobank data at a low cost of computational ressources and efficient execution time. The scripts are located in repository called "UKBB_DATA_GENERATOR". The image below shows a summary view of the data preparation protocol. To better understand the protocol, it's recommended to study the scripts and any constructive suggestion will be wellcome and greatful.
+Our goal in this section is to create a tool which will help researchers to better parse the UK biobank data at a low cost of computational ressources and efficient execution time. The scripts are located in repository called "UKBB_DATA_GENERATOR". The image below shows a summary view of the data preparation protocol. To better understand the protocol, it's recommended to study the scripts; and any constructive suggestion will be wellcome and greatful.
 
 <p align="center">
   <img src="images/UKBB_data_prepare_image.png" width="600" alt="accessibility text">
@@ -109,14 +109,14 @@ The scripts that help to format and generate the final reports should be located
 /~/CNV-calling/UKBB_DATA_GENERATOR/warperForfileTranspose.sh
 /~/CNV-calling/UKBB_DATA_GENERATOR/warperForFinalreportOutput.sh
 ```
-Before starting to extract reduced final report input for CNV calling from the UKBB big matrixes, on need to reformat the raw downloaded data. As indicated in the summary image above, UKBB provide the BAF, LRR, ConfidenceScore in big high dimensional matrixes. We also need to take in count that the sample and the SNP line up in the files remain the same in all of the other files.
+Before starting to extract reduced final report input for CNV calling from the UKBB big matrixes, one need to reformat the raw downloaded data. As indicated in the summary image above, UKBB provide the BAF, LRR, ConfidenceScore in big high dimensional matrixes. We also need to take in count that the sample and the SNP line up in the files remain the same in all of the other files.
 
-1. To start formating the raw data, the user should run the command line below, it can be run sequencialy or in parallel. Three task is available in this plugin and the user is able to provide them in parametter. 
+1. To start formating the raw data, the user should run the command line below, it can be run sequencialy or in parallel. Three task are available in this plugin and the user is able to provide them in parametter. 
 Lets run an example of the three available task in parallele:
 ```bash
 bash ./warperForfileTranspose.sh 3 1 5 . BAF:LRR:CR
 ```
-Thee above option will run 3 parallel tasks, each on a different processor. This is why the per task reserve RAM memory should be available on the computing machine, otherwise, the execution will raise and Out Of Memory error.
+The above option will run 3 parallel tasks, each on a different processor. This is why the per task reserve RAM memory should be available on the computing machine, otherwise, the execution will raise and Out Of Memory error.
 here is a definition of the above used parametter in the same order they were used:
 ```text
 arg1: number of tasks
@@ -134,16 +134,16 @@ for option in BAF LRR CR
 ```
 In the above case, the user is computing sequencial jobs, therefore only one CPU is required while the amount of required memory remain unchanged.
 
-Now that the big transposed matrix is created, on can extract reduced final report for CNV calling from them. To do so, the user can use the provided script named "warperForFinalreportOutput.sh". The script is entirely parallelizable, and the command line bellow should do the jobs.
+Now that the big transposed matrix is created, one can extract reduced final report for CNV calling from them. To do so, the user can use the provided script named "warperForFinalreportOutput.sh". The script is entirely parallelizable, and the command line bellow should do the jobs.
 ```bash
 transposedData=/base_path_to_the_transposed_matrix/...
 FRdirectory=/path_to_the_reduced_Final_report_output_results/...
 bash ./warperForFinalreportOutput.sh 10 all $transposedData $FRdirectory
 ```
 The above directory will execute 10 parallel tasks, each task is the extraction and writing of a different reduced final report data. The user must not forget that this process require at least 10 CPU cores to be available on the machine.
-There is no need to worry about RAM memory usage, since the process does not buffer the whole transposed data in the available computer RAM. it only buffer ~12Mb x 2 of RAM, which represent one line per matrix, and therefore the required data to output a single reduced final report file. Once the the file is stored on the disk (wd), the RAM is cleared and ready for a next extraction. In conclusion, our example will use 10 cores of CPU and 240 Mb of RAM (10 cores x 12Mb x 2 lines).
+There is no need to worry about RAM memory usage, since the process does not buffer the whole transposed data in the available computer RAM; it only buffer ~12Mb x 2 of RAM, which represent one line per matrix, and therefore the required data to output a single reduced final report file. Once the the file is stored on the disk (wd), the RAM is cleared and ready for a next extraction. In conclusion, our example will use 10 cores of CPU and 240 Mb of RAM (10 cores x 12Mb x 2 lines).
 
-In some cases, on might acquired illumina beadstudio final report which contained data for all individuals. Since the CNV caller require that the reduced final report to be splitted individualy, the user can use the provided per script by PennCNV called "split_illumina_report.pl", located at "~/PennCNV-1.0.5/" and work as below.
+In some cases, one might acquire illumina beadstudio final report which contained data for all individuals. Since the CNV caller require that the reduced final report to be splitted individualy, the user can use the provided per script by PennCNV called "split_illumina_report.pl", located at "~/PennCNV-1.0.5/" and work as below.
 
 ```bash
 Usage:
@@ -185,7 +185,7 @@ sampleID2
 ...
 sampleIDn
 ```
-Command line to execute the script, also python3 is required:
+Command line to execute the script (python3 is required):
 
 ```bash
 python3 SplittedIlluminaBeadStudioFinalReport.py ./path_to_beadstudion_FinalReport/BigIllumina_FinalReport.txt ./path_to_list_of_ID_to_be_extracted/sample_list.txt ./path_to_output_data_directory/Output_splitted_data ./path_to_snpList_file/SNP_list.txt
