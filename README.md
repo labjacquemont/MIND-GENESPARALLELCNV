@@ -1,3 +1,23 @@
+<p align="left">
+  <img src="images/MindGeneslogo.png" height= "48" width="1550" alt="accessibility text">
+</p>
+
+
+# Description
+Mind&GenesParallelCNV is freeware tool which mainly consisted on executing CNV calling parallel tasks in the most efficient method. The tool is design to make the command lines as much simple as possible, also make the tasks possible to be executed on any type of computer including desktops. The tools only work on linux64 for the moment. Other than focussing on calling CNV in parallel, the tool is meant to help detecting CNV using several type of callers based on different algorithms (implementation language may differ between algos). For the moment, the tool generates parallel calls from PennCNV and QuantiSNP, but other CNV caller such as IPattern, BCFtools, FastSeg, DNAcopy, etc will be implemented very soon so that better consensus results can be made available.
+
+As indicated Mind&GenesParallelCNV is a freeware and opensource linux based tool, and users are free to suggest any improvement of it, and eventually digital and intellectual property laws are applied. Therefore, reference should be cited if this tool, any tools from this repo or any crosslinked tools from this repo  have been used in reasearch publication.
+
+To know more about our lab research or our team, please reach the following link: http://www.minds-genes.org/
+
+Author: Martineau Jean-Louis
+contact: 
+* matineau.jean-louis@umontreal.ca 
+* martineau.jean-louis@recherche-ste-justine.qc.ca
+
+This tool is implemented as collaboration to LabJacquemont
+
+
 # Data input preparation
 
 This section is specially made for research lab that want to prepare their CNV calling input files from the UKBB cohort. For those that are familiar with the UKBB (Uk biobank) cohort snp array genotyping data, it's easy to quickly realize that the data are presented in a high dimensional level and very high storage memory. The manipulation of these data is very challenging and for lab groups that do not have computational resources, this challenge difficulty might be increased.
