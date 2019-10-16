@@ -1,5 +1,5 @@
-<p align="left">
-  <img src="images/MindGeneslogo.png" height= "48" width="1550" alt="accessibility text">
+<p align="center">
+  <img src="images/MindGeneslogo.png" height= "45" width="1500" alt="accessibility text">
 </p>
 
 
