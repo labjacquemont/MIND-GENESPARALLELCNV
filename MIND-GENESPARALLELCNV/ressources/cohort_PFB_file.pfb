@@ -1,0 +1,10 @@
+THIS IS WHERE WE SAVE THE PFB FILE (require by PennCNV)
+This is a tab delimited file with the header below:
+
+Name	Chr	Position	PFB
+
+header column definition:
+Name: The array genotyping markers SNP name
+Chr: SNP chromosome
+Position: SNP genomic position as referenced by its chromosome
+PFB: Population B allele frequency computed on the specific cohort data (by the PennCNV compute pfb plugin)
