@@ -3,7 +3,7 @@
 </p>
 
 
-#### Description
+## Description
 Mind&GenesParallelCNV is freeware tool which mainly consisted on executing CNV calling parallel tasks in the most efficient method. The tool is design to make the command lines as much simple as possible, also make the tasks possible to be executed on any type of computer including desktops. The tools only work on linux64 for the moment. Other than focussing on calling CNV in parallel, the tool is meant to help detecting CNV using several type of callers based on different algorithms (implementation language may differ between algos). For the moment, the tool generates parallel calls from PennCNV and QuantiSNP, but other CNV caller such as IPattern, BCFtools, FastSeg, DNAcopy, etc will be implemented very soon so that better consensus results can be made available.
 
 As indicated Mind&GenesParallelCNV is a freeware and opensource linux based tool, and users are free to suggest any improvement of it, and eventually digital and intellectual property laws are applied. Therefore, reference should be cited if this tool, any tools from this repo or any crosslinked tools from this repo  have been used in reasearch publication.
@@ -18,7 +18,9 @@ contact:
 This tool is implemented as collaboration to LabJacquemont
 
 
-#### Data input preparation
+## Data input preparation
+
+### UK Biobank format
 
 This section is specially made for research lab that want to prepare their CNV calling input files from the UKBB cohort. For those that are familiar with the UKBB (Uk biobank) cohort snp array genotyping data, it's easy to quickly realize that the data are presented in a high dimensional level and very high storage memory. The manipulation of these data is very challenging and for lab groups that do not have computational resources, this challenge difficulty might be increased.
 
@@ -150,6 +152,8 @@ bash ./warperForFinalreportOutput.sh 10 all $transposedData $FRdirectory
 The above directory will execute 10 parallel tasks, each task is the extraction and writing of a different reduced final report data. The user must not forget that this process require at least 10 CPU cores to be available on the machine.
 There is no need to worry about RAM memory usage, since the process does not buffer the whole transposed data in the available computer RAM. it only buffer ~12Mb x 2 of RAM, which represent one line per matrix, and therefore the required data to output a single reduced final report file. Once the the file is stored on the disk (wd), the RAM is cleared and ready for a next extraction. In conclusion, our example will use 10 cores of CPU and 240 Mb of RAM (10 cores x 12Mb x 2 lines).
 
+### Illumina BeadStudio format
+
 In some cases, on might acquired illumina beadstudio final report which contained data for all individuals. Since the CNV caller require that the reduced final report to be splited individually, the user can use the provided per script by PennCNV called "split_illumina_report.pl", located at "~/PennCNV-1.0.5/" and work as below.
 
 ```bash
@@ -197,8 +201,23 @@ Command line to execute the script, also python3 is required:
 ```bash
 python3 SplittedIlluminaBeadStudioFinalReport.py ./path_to_beadstudion_FinalReport/BigIllumina_FinalReport.txt ./path_to_list_of_ID_to_be_extracted/sample_list.txt ./path_to_output_data_directory/Output_splitted_data ./path_to_snpList_file/SNP_list.txt
 ```
+### Affymetrix format
 
-#### CNV-calling
+To easily process the affimetrix cel files, a two step methodology is suggested:
+* Generate SNP calls, confidence and summary data from Axiom suite windows package or any other chosen OS
+* Computing cluster data for the SNPs and calculate BAF and LRR fro PennCNV-affi package (available in the PennCNV installation directory)
+Finally, the kcolumn perl script from the master script at step 2 will take care of the sample spliting process (how lucky we are!!!)
+
+To process step2, the user must fill the config file located along with the script at "affimetrixCELtoBAFandLRR/" will all pre-requisite for the script execution. Then, the config file "input.conf" will be provided as parameter to the "Affy_Axiome_LRR_BAF_generator.sh" script and the rest will be done automaticly. The commad line should be executed as below:
+
+```bash
+cd ~/CNV-calling-master/affimetrixCELtoBAFandLRR/
+bash Affy_Axiome_LRR_BAF_generator.sh input.conf
+```
+ 
+
+
+## CNV-calling
 
 This pipeline is a warpper tools which will help users to easily call CNV upon array genotyping data like illumina OMNI2.5, Infinium, or Affimetrix Axiom, genome wide 6.0, etc... . The goal of this tool also consist on helping users to call CNV in a high performance way, where all functions in the pipeline are optimized to use the least amount of memory (RAM) possible, to avoid generating the least possible temporary data and optimize the available storage space. Other than the scripts optimization, the pipeline is built to paralellize the jobs: meaning each individual CNV calls are computing separately in a single CPU core. To do so, openMP and mpi4py compiled with gcc base are required. The pipeline creates automatically all required folders, and both CNV calling algorithms (PennCNV and QuantiSNP) results are stored separately. The only human manual pre-process that are required by the pipeline are:
 
@@ -242,7 +261,7 @@ Then hit,
 4) Finally, fill out the configuration file (.config file) with all required paths for the tools and files paths.
 
 
-#### Running the pipeline scripts
+## Running the pipeline scripts
 
 
 <p align="center">
@@ -293,7 +312,7 @@ Before running the pipeline, one need to compute the pfb file required by PennCN
 To do so, the user should shuffle a list of at leat 300 samples from the project cohort and 
 compute the population B allele frequency using the provided PennCNV plugins.
 
-#### Generate PFB per SNP data
+## Generate PFB per SNP data
 
 The PFB data is required for CNV calling by pennCNV. To compute pfb for a CNV calling project by PennCNV, it exists 2 possibility based on the sample size available. A sample size of the project cohort less than ~300 samples means that there is not enough observation to compute statistically significant population frequency. Therefore the user must download a generic version of the pfb data that reflect the cohort ancestry. In this case, the user can follow the bellow procedure.
 
@@ -376,13 +395,13 @@ outputResults=/directory_path_to_the_pfb_results_per_chr/
 mpirun -np 24 python3 $pyScript $inputListSamples $inputListSNP $outputResults > pfbouput.log
 ```
 
-#### Generate GC correct per SNP data
+## Generate GC correct per SNP data
 
 GC correct technique is important in CNV calling since it helps the researchers to evaluate the genomics site wave length factor in the cohort genotyping data.
 
 To create GC content data for a project, if is not available for the SNP array technology, one can refer to the well explained tutorial by Vib Bioinformatics Core available at https://wiki.bits.vib.be/index.php/Create_a_GC_content_track#cite_note-2 . 
 
-#### Generate samples quality summary data for inspection
+## Generate samples quality summary data for inspection
 The samples quality inspection is required for the HMM training step. As we recommend users to compute their
 cohort specific HMM upon their best qualified samples. Once the quality summary data is generated for
 each sample, the best samples must be selected according the following parameters:
@@ -418,7 +437,7 @@ Using Linux classic one-liner command lines, one can filter out bad quality samp
 with at most an LLR_SD value of 0.20 or lower. Why .20 or lower? because PennCNV HMM training default QC only accept
 samples quality that passing the indicated threshold.
 
-#### Generate cohort specific HMM data
+## Generate cohort specific HMM data
 
 Now that we have the best quality samples, one can compute the HMM training using the option "hmm". Before launching the analysis, make sure that the list of the best quality samples is already created and specified in the config file. Also one must indicate the location to save the hmm file. This process can not be executed in parallel and can last between 1-2hr for a sample size of ~400 individuals. To start the analysis, follow the command line below:
 
@@ -439,7 +458,7 @@ The HMM file should looks like the print-screen below.
 
 The HMM results is a pre-requisite file for PennCNV only, QuantiSNP is able to create it's own EM model each time the CNV calling algorithm is launch. To build a better understand on how and why PennCNV use an HMM model please refer to their tools published paper and repository (http://penncnv.openbioinformatics.org). 
 
-#### CNV detection
+## CNV detection
 
 
 <p align="center">
@@ -484,27 +503,33 @@ sample1.qc
 ```
 
 The QuantiSNP samples quality analysis generates quality assessment results per chromosome, since the users require often the quality results for the whole individuals array, then we provide a script which is able to averaged and standardize the quality values.
-```bash
-/script localisation/ to do
-```
+
 Here is the original print-screen for the QuantiSNP quality output. As we see the format is different from PennCNV one, therefore the standardization of both data formats is required. 
 
 <p align="center">
   <img src="images/QuantiSNPqual.png" width="600" alt="accessibility text">
 </p>
 
+To format the quantiSNP quality summary results, the should run the pythn script "QuantiSNPqualitySummaryMerge.py". The script require python3 and statistics module to be pre-installed. It require two parameters, a path to the quantiSNP cnv calling results folder and tho file (with path location) to store the results. The command line can be executed a below:
+
+```bash
+cd ~/CNV-calling-master
+python3 QuantiSNPqualitySummaryMerge.py "path_to_quantiSNP_CNV_call_results" "path_to_the_output_file"
+```
+
+
 Here is a print-screen example of the QuantiSNP CNV detection results output.
 <p align="center">
   <img src="images/QuantiSNPcnv.png" width="700" alt="accessibility text">
 </p>
 
-#### CNV quality check and annotation for functional inquireries
+## CNV quality check and annotation for functional inquireries
 
 <p align="center">
   <img src="images/CNVcallingQualityImageAnnotation.png" width="600" alt="accessibility text">
 </p>
 
-#### Reference
+## Reference
 ```text
 1) Huguet G, Schramm C, Douard E, Jiang L, Labbe A, Tihy F, Mathonnet G, Nizard S, Lemyre E, Mathieu A, Poline JB, Loth E, Toro R, Schumann G, Conrod P, Pausova Z, Greenwood C, Paus T, Bourgeron T, Jacquemont S; IMAGEN Consortium. Measuring and Estimating the Effect Sizes of Copy Number Variants on General Intelligence in Community-Based Samples. JAMA Psychiatry. 2018 May 1;75(5):447-457. doi: 10.1001/jamapsychiatry.2018.0039. PubMed PMID: 29562078; PubMed Central PMCID:PMC5875373
 2) Wang K, Li M, Hadley D, Liu R, Glessner J, Grant S, Hakonarson H, Bucan M. PennCNV: an integrated hidden Markov model designed for high-resolution copy number variation detection in whole-genome SNP genotyping data Genome Research 17:1665-1674, 2007

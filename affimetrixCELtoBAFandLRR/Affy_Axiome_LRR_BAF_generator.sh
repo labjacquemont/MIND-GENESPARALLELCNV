@@ -15,17 +15,25 @@
 # PennCNV installation is required for this script
 # module load PennCNV/jun162011
 
-call="/path_to_SNPcalls_file_from_AxiomeSuite/Axiome.calls.txt"
-conf="/path_to_SNPconfidences_file_from_AxiomeSuite/Axiome.confidences.txt"
-sum="/exec5/GROUP/lyon/lyon/BIG_FILES/DrJacquemontLAB/CaG_Genotyping_Axiom/Genotype_Affy_file/Axiom.summary.txt"
-out="/path_to_output_results/Axiom_OUT_sigFile"
+config=$1
+PennCNV=$(cat $config | sed 's/\ //g;s/:/\t/g' | awk -F"\t" '{if($1=="PennCNV"){print $2}}')
+SNPs=$(cat $config | sed 's/\ //g;s/:/\t/g' | awk -F"\t" '{if($1=="SNPs"){print $2}}')
+calls=$(cat $config | sed 's/\ //g;s/:/\t/g' | awk -F"\t" '{if($1=="calls"){print $2}}')
+confidence=$(cat $config | sed 's/\ //g;s/:/\t/g' | awk -F"\t" '{if($1=="confidence"){print $2}}')
+summary=$(cat $config | sed 's/\ //g;s/:/\t/g' | awk -F"\t" '{if($1=="summary"){print $2}}')
+output=$(cat $config | sed 's/\ //g;s/:/\t/g' | awk -F"\t" '{if($1=="output"){print $2}}')
+
+call=$calls
+conf=$confidence
+sum=$summary
+out=$output
 mkdir -p $out
 
-cluster="/path_to_/PennCNV-1.0.5/affy/bin/generate_affy_geno_cluster.pl"
-norm="/path_to_/PennCNV-1.0.5/affy/bin/normalize_affy_geno_cluster.pl"
-kcol="/path_to_/PennCNV-1.0.5/kcolumn.pl"
+cluster="$PennCNV/affy/bin/generate_affy_geno_cluster.pl"
+norm="$PennCNV/affy/bin/normalize_affy_geno_cluster.pl"
+kcol="$PennCNV/kcolumn.pl"
 
-SNPs="/path_to_the_project_SNP_file_directory_/project-SNPs_file.txt"
+SNPs=SNPs
 
 
 
